@@ -2,6 +2,7 @@
 #
 # This file is part of INGInious. See the LICENSE and the COPYRIGHTS files for
 # more information about the licensing of this file.
+from datetime import datetime
 import json
 import logging
 import pymongo
@@ -30,7 +31,8 @@ class CourseSubmissionsPage(INGIniousSubmissionsAdminPage):
 
         if "replay_submission" in user_input:
             # Replay a unique submission
-            submission = self.database.submissions.find_one({"_id": ObjectId(user_input["replay_submission"])})
+            submission = self.database.submissions.find_one_and_update(
+                {"_id": ObjectId(user_input["replay_submission"])}, {'$set': {"last_replay": datetime.now()}})
             if submission is None:
                 raise NotFound(description=_("This submission doesn't exist."))
 
@@ -68,6 +70,8 @@ class CourseSubmissionsPage(INGIniousSubmissionsAdminPage):
 
                 tasks = course.get_tasks()
                 for submission in data:
+                    self.database.submissions.update_one(
+                        {"_id": submission['_id']}, {'$set': {"last_replay": datetime.now()}})
                     self.submission_manager.replay_job(tasks[submission["taskid"]], submission)
                 msgs.append(_("{0} selected submissions were set for replay.").format(str(len(data))))
                 return self.page(course, params, msgs=msgs)
