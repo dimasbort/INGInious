@@ -421,7 +421,7 @@ class UserManager:
                 return False
             else:
                 # New user, create an account using email address
-                self._database.users.insert({"username": "",
+                self._database.users.insert_one({"username": "",
                                              "realname": realname,
                                              "email": email,
                                              "bindings": {auth_id: [username, additional]},
@@ -550,7 +550,7 @@ class UserManager:
 
     def user_saw_task(self, username, courseid, taskid):
         """ Set in the database that the user has viewed this task """
-        self._database.user_tasks.update({"username": username, "courseid": courseid, "taskid": taskid},
+        self._database.user_tasks.update_one({"username": username, "courseid": courseid, "taskid": taskid},
                                          {"$setOnInsert": {"username": username, "courseid": courseid, "taskid": taskid,
                                                            "tried": 0, "succeeded": False, "grade": 0.0,
                                                            "submissionid": None, "state": ""}},

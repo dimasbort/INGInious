@@ -147,7 +147,7 @@ def get_app(config):
         database.user_tasks.create_index([("courseid", pymongo.ASCENDING), ("taskid", pymongo.ASCENDING)])
         database.user_tasks.create_index([("courseid", pymongo.ASCENDING)])
         database.user_tasks.create_index([("username", pymongo.ASCENDING)])
-        database.db_version.insert({"db_version": DB_VERSION})
+        database.db_version.insert_one({"db_version": DB_VERSION})
     elif db_version.get("db_version", 0) != DB_VERSION:
         raise Exception("Please update the database before running INGInious")
 
@@ -253,7 +253,6 @@ def get_app(config):
     template_helper.add_to_template_globals("default_allowed_file_extensions", default_allowed_file_extensions)
     template_helper.add_to_template_globals("default_max_file_size", default_max_file_size)
     template_helper.add_to_template_globals("is_tos_defined", is_tos_defined)
-    template_helper.add_to_template_globals("privacy_page", config.get("privacy_page", None))
     template_helper.add_other("course_admin_menu",
                               lambda course, current: course_admin_utils.get_menu(course, current, template_helper.render,
                                                                                   plugin_manager, user_manager))

@@ -211,7 +211,6 @@ class MultipleChoiceProblem(Problem):
         super(MultipleChoiceProblem, self).__init__(problemid, content, translations, taskfs)
         self._header = content['header'] if "header" in content else ""
         self._multiple = content.get("multiple", False)
-        self._unshuffle = content.get("unshuffle", False)
         if "choices" not in content or not isinstance(content['choices'], (list, tuple)):
             raise Exception("Multiple choice problem " + problemid + " does not have choices or choices are not an array")
         good_choices = []
@@ -331,7 +330,7 @@ class MultipleChoiceProblem(Problem):
     def parse_problem(self, problem_content):
         problem_content = Problem.parse_problem(problem_content)
         # store boolean fields as booleans
-        for field in ["optional", "multiple", "centralize","unshuffle"]:
+        for field in ["optional", "multiple", "centralize"]:
             if field in problem_content:
                 problem_content[field] = True
 

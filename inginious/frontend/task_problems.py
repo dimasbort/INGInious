@@ -160,8 +160,7 @@ class DisplayableMultipleChoiceProblem(MultipleChoiceProblem, DisplayableProblem
         # Ensure that the choices are random
         # we *do* need to copy the choices here
         random_order_choices = list(self._choices)
-        if not self._unshuffle:
-            rand.shuffle(random_order_choices)
+        rand.shuffle(random_order_choices)
 
         if self._multiple:
             # take only the valid choices in the first pass
@@ -186,12 +185,12 @@ class DisplayableMultipleChoiceProblem(MultipleChoiceProblem, DisplayableProblem
                 if entry['valid'] and limit > 0:
                     choices.append(entry)
                     limit = limit - 1
-        if not self._unshuffle:
-            rand.shuffle(choices)
-        else:
-            choices = sorted(choices, key=lambda k: k['index'])
+
+        rand.shuffle(choices)
+
         header = ParsableText(self.gettext(language, self._header), "rst",
                               translation=self.get_translation_obj(language))
+
         return template_helper.render("tasks/multiple_choice.html", pid=self.get_id(), header=header,
                                       checkbox=self._multiple, choices=choices,
                                       func=lambda text: ParsableText(

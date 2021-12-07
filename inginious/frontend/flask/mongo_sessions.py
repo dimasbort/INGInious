@@ -53,7 +53,7 @@ class MongoDBSessionInterface(SessionInterface):
                  permanent=True):
         self.client = client
         self.store = client[db][collection]
-        self.store.ensure_index('expiration')
+        self.store.create_index('expiration')
         self.use_signer = use_signer
         self.permanent = permanent
 
@@ -133,10 +133,10 @@ class MongoDBSessionInterface(SessionInterface):
         expires = self.get_expiration_time(app, session)
         cookieless = session.cookieless
         val = self.serializer.dumps(dict(session))
-        self.store.update({'_id': store_id},
+        self.store.replace_one({'_id': store_id},
                           {'data': val,
                            'expiration': expires,
-                           'cookieless': cookieless}, True)
+                           'cookieless': cookieless}, upsert=True)
         if self.use_signer:
             session_id = self._get_signer(app).sign(want_bytes(session.sid))
         else:
