@@ -226,7 +226,7 @@ class WebAppSubmissionManager:
 
     def get_submission(self, submissionid, user_check=True):
         """ Get a submission from the database """
-        sub = self._database.submissions.find_one({'_id': ObjectId(submissionid)})
+        sub = self._database.submissions.find_one({'_id': submissionid})
         if user_check and not self.user_is_submission_owner(sub):
             return None
         return sub
@@ -288,7 +288,8 @@ class WebAppSubmissionManager:
 
         self._before_submission_insertion(task, inputdata, debug, obj)
         obj["input"] = self._gridfs.put(bson.BSON.encode(inputdata))
-        submissionid = self._database.submissions.insert_one(obj)
+        zu = self._database.submissions.insert_one(obj)
+        submissionid = zu.inserted_id
         to_remove = self._after_submission_insertion(task, inputdata, debug, obj, submissionid)
 
         ssh_callback = lambda host, port, user, password: self._handle_ssh_callback(submissionid, host, port, user, password)

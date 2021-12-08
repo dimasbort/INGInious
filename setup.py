@@ -10,6 +10,7 @@ from setuptools import setup, find_packages
 
 install_requires = [
     "docker>=2.5.0",
+    "mosspy>=1.0.9",
     "docutils>=0.14",
     "pymongo>=3.2.2",
     "PyYAML>=3.11",
@@ -87,6 +88,6 @@ setup(
     author="INGInious contributors",
     author_email="inginious@info.ucl.ac.be",
     license="AGPL 3",
-    url="https://github.com/UCL-INGI/INGInious",
+    url="https://github.com/dimasbort/INGInious",
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf8').read()
 )

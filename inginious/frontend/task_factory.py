@@ -6,6 +6,7 @@
 """ Factory for loading tasks from disk """
 
 from os.path import splitext
+import pathlib, shutil
 from inginious.common.filesystems.provider import FileSystemProvider
 from inginious.common.log import get_course_logger
 from inginious.common.base import id_checker, get_json_or_yaml
@@ -270,13 +271,24 @@ class TaskFactory(object):
         if not id_checker(taskid):
             raise InvalidNameException("Task with invalid name: " + taskid)
 
-        task_fs = self.get_task_fs(course.get_id(), taskid)
+        task_fs = self.get_task_fs(course.get_id(), taskid)        
+        submissiom_fs = task_fs.from_subfolder("submissions")
+        
         task_fs.ensure_exists()
+        submissiom_fs.ensure_exists()        
+        
+        curr_p = str(pathlib.Path(__file__).parent.absolute())+"/moss_usage.py"
 
         if task_fs.exists("task.yaml"):
             raise TaskAlreadyExistsException("Task with id " + taskid + " already exists.")
         else:
             task_fs.put("task.yaml", get_json_or_yaml("task.yaml", init_content))
+            
+        if not task_fs.exists("antiplagiarism.py"):
+            try:
+                f = open(curr_p, 'r')
+                task_fs.put("antiplagiarism.py", f.read())
+                f.close()
 
         get_course_logger(course.get_id()).info("Task %s created in the factory.", taskid)
 
