@@ -1,0 +1,46 @@
+name: '[TUTO] The INGInious tutorial'
+admins:
+- superadmin
+description: ''
+tutors: []
+groups_student_choice: true
+use_classrooms: true
+accessible: true
+allow_unregister: true
+allow_preview: false
+registration: true
+registration_password: null
+registration_ac: null
+registration_ac_list:
+- '  '
+is_lti: false
+lti_keys: {}
+lti_send_back_grade: false
+task_dispenser: toc
+dispenser_data:
+-   config:
+        closed: false
+    id: list_of_exercises
+    rank: 0
+    tasks_list:
+        01_getting_started: 0
+        02_courses: 1
+        03_tasks: 2
+        04_run_student: 3
+        05_fetching_input: 4
+        06_parsing_template: 5
+        07_random_inputs: 6
+        08_feedback: 7
+        09_advance_feedback: 8
+        10_archive: 9
+        11_ssh_debug: 10
+        12_environments: 11
+        13_ssh_student: 12
+    title: List of exercises
+lti_url: ''
+tags:
+    Computation:
+        type: 1
+        visible: true
+        name: Computation
+        description: Looks like computation error !

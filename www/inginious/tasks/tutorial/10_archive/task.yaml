@@ -1,0 +1,73 @@
+accessible: true
+author: The INGInious authors
+categories: []
+contact_url: ''
+context: |-
+    .. container:: row
+
+        .. container:: col-md-10 text-justify
+
+            Sometimes providing students with scores is not sufficient : you may want to archive some files that were generated during the execution of the test suite in order to later analyze some (possibly debugging) files, or to run a plagiarism detection tool on the submissions.
+
+            In this section, you'll see how to export some generated files into an archive that will be downloadable along with the submission metadata. When this feature is not used, only the input/output fields accessible and shown to the student are downloadable.
+
+        .. container:: col-md-2 text-center
+
+            .. raw:: html
+
+               <i style="font-size:120px;" class="fa fa-archive"></i>
+
+    The ``archive`` folder
+    ----------------------
+
+    .. class:: text-justify
+
+        The run script that is executed in the *grading container* can generate files and store them in the ``archive`` folder. The submissions admin page allows to download student submissions including these archives files.
+
+        For instance, to generate a very stupid file and put it in the archive:
+
+        .. code-block:: shell
+
+            #!/bin/bash
+            echo 'This is a stupid file content' > /archive/stupid_file.txt
+
+    The ``Submissions`` page
+    -----------------------------
+
+    On the ``Submissions`` page you can have an overview of the students submissions with the options to filter for specific tasks and classrooms with even advanced filters such as submission date or minimum grade.
+
+    For the submissions found, you can see submissions metadata such as the student ``username`` or ``result`` with score.
+    Note that this kind of metadata such as username and submission date are also accessible directly within the grading script with the input API (using @username, @email, @time...).
+
+    On the ``Submissions`` page you also have the option to download a specific submission or to ``replay`` the submission which can be useful if you modified the run script and want to evalute submissions again.
+    If you download submissions, it will be packed as a ``.tgz`` file containing a ``submission.test`` for every submission with all its metadata and the associated ``archive`` folder.
+
+    Answer to the small assignment below. Then, go to your submission summary page in order to download the submission archive. You should find the file in the ``archive`` subdirectory.
+environment_id: default
+environment_parameters:
+    run_cmd: ''
+    limits:
+        time: '3'
+        hard_time: ''
+        memory: '100'
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: '0'
+name: 10. Export generated files
+network_grading: false
+order: 9
+problems:
+    thecode:
+        header: Write an executable script (do not forget ``#!``) which generates
+            some dummy ``generated.txt`` file and stores it in the submission archive.
+        default: ''
+        name: Archiving a file
+        language: shell
+        type: code
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

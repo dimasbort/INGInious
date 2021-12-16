@@ -16,6 +16,7 @@ install_requires = [
     "PyYAML>=3.11",
     "Jinja2 >= 2.10",
     "lti>=0.9.0",
+    "pathlib>=1.0.1",
     "oauth2>=1.9.0.post1",
     "httplib2>=0.9",
     "watchdog >= 0.8.3",

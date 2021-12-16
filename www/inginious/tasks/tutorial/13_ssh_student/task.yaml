@@ -1,0 +1,76 @@
+accessible: true
+author: gcreupelandt
+categories: []
+contact_url: ''
+context: |-
+    .. container:: row
+
+        .. container:: col-md-10 text-justify
+
+            To allow students to learn how to use shells and bash commands, it may be useful to allow students to directly interact with their own container. This is possible with the *ssh_student* command. It will start a ssh server on the student_container and kill the container after the ssh session ended.
+
+            Some setup and teardown actions may be specified, for example, to start a process before starting the ssh server or to snapshot the running process before killing the container.
+
+    To illustrate its principle, a very basic example of run script is provided below:
+
+            .. code-block:: bash
+
+                #!/bin/bash
+
+                ssh_student --setup-script "touch /task/student/delete_me.txt"
+
+                if [ -f /task/student/delete_me.txt ]; then
+                    feedback-result failed
+                    feedback-msg -em "You did not delete the file!"
+                else
+                    feedback-result success
+                fi
+
+            There are however some important limitations to bear in mind:
+
+            | -The setup and teardown scripts will not be run as root (for security reasons)
+            | -Only the modifications to the files in the student subdirectory will be reflected in the grading container
+
+
+    Notes and limitations:
+    ----------------------
+
+            | -Setup and teardown scripts are not run as root for security reasons.
+            | -The student will not be able to run commands as root for security reasons.
+            | -Internet access must be allowed in the environment configuration tab.
+
+
+    Examples:
+    ---------
+
+    Some examples including more complexe exercises can be found at https://github.com/darkyne/ssh_student_examples including starting background process during setup and snapshotting the running process during teardown.
+
+
+    Let's have a try !
+    ------------------
+
+    | Simply press *submit* and you will be granted an ssh access.
+    | Your job is to delete the "delete_me.txt" file then to exit the ssh session.
+    | Note, this specific exercise is configured wih a 180sec hard time out, so you only have 3min to connect, delete the file and exit. Good luck.
+    | You should succeed in this quite easily !
+environment_id: default
+environment_parameters:
+    limits:
+        time: '30'
+        hard_time: '180'
+        memory: '100'
+    network_grading: 'on'
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: '0'
+name: 13. Interactivity
+network_grading: false
+problems: {}
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

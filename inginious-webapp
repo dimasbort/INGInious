@@ -55,10 +55,13 @@ if not configfile:
         configfile = "./configuration.json"
     else:
         raise Exception("No configuration file found")
+        
+os.environ["INGINIOUS_WEBAPP_CONFIG"]=configfile
 
 # Load configuration and application (!!! For mod_wsgi, application identifier must be present)
 config = load_json_or_yaml(configfile)
 application, close_app_func = inginious.frontend.app.get_app(config)
+
 
 # Init logging
 init_logging(config.get('log_level', 'INFO'))

@@ -1,0 +1,128 @@
+accessible: true
+author: ''
+categories: []
+contact_url: ''
+context: |+
+    .. container:: row
+
+       .. container:: col-xs-8 col-md-9 text-justify
+
+          Typical INGInious tasks are displayed the same way for all the students. However, it is possible to display some parameters with random values for students to avoid copy/pasting their peers submissions. This can, for example, be a numerical value for a computation, or the name of a variable. This might be especially useful for mathematical exercises.
+
+
+
+    ``Random inputs``
+    ------------------
+
+    On the ``Edit task`` page , you can specify the number of desired random inputs.
+    These inputs can be configured to be generated once per student or even regenerated for each loading of the task page.
+
+    From the task context
+    ---------------------
+
+
+    .. class:: text-justify
+
+        The random parameters can be accessed through a ``input`` Javascript dictionary in the task and subproblems context. To show a random value to the student, declare a ``.. raw:: html`` and include some Javascript code via the HTML ``<script>`` tag.
+
+    Here is a dummy example:
+
+    .. code-block:: bash
+
+            .. raw:: html
+
+                <script>
+                document.write(input["@random"]);
+                </script>
+
+    .. class:: text-justify
+
+    From the ``run`` script
+    -----------------------
+
+        The random parameter can be accessed through the ``getinput`` API using the ``@random`` specific id. If multiple random parameters were desired, it will return a list.
+
+        Here is a dummy example of random input used in the evaluation script:
+
+        As a note, notice this is a IPython script which allows to use bash commands with the bang (!) magic command.
+
+    .. code-block:: python
+
+            #Dummy example of ipython script to evaluate student answer for equation: 2x²-Value=0
+            import math
+
+            #Get the random input parameter and select a predifined value based on it
+            randomIndex=int(float(get_input("@random")[0]*100))%6
+            values = [8, 18, 32, 50, 72, 98]
+            value=values[randomIndex]
+
+            #Get the student answer and the correct answer
+            student = int(get_input("student_code"))
+            solution = int(math.sqrt(value/2))
+
+            #As an example, the two answers can be accessed from command line via temporary environment variables
+            #This is useful if you want to share the same variable for python commands and bash commands
+            %env MY_SOLUTION=$solution
+            %env STUDENT_SOLUTION=$student
+
+            #Compare student solution and correct solution.
+            #This could be implemeneted in python but here it uses bash for the Ipython features example
+            ! if [ "$STUDENT_SOLUTION" = "$MY_SOLUTION" ]; then feedback-result success; else feedback-result failed; fi
+
+    .. class:: text-justify
+
+
+    Note the script for this precise example could be simpler by directly getting the student solution with the
+    ``getinput`` API and compare it with the correct solution without even requiring to execute code in a *student container*. But this script example is more generic and could implement more complex tasks where student would have to implement some real code instead of a direct value.
+
+    Let's directly use this script as an example !
+
+    Enter the solution to the following equation:
+
+
+        .. container:: col-md-2 text-center
+
+
+            .. raw:: html
+
+                <script>
+                let a = parseInt(input["@random"]*100 );
+                let index = ((a%6)+6)%6;
+                let values = [8,18,32,50,72,98]
+                let value = values[index]
+
+                document.write("2x²-"); document.write(value);
+                document.write("=0");
+                </script>
+
+
+environment_id: default
+environment_parameters:
+    run_cmd: ''
+    limits:
+        time: '30'
+        hard_time: ''
+        memory: '100'
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: '1'
+name: 7. Random parameters
+network_grading: false
+order: 6
+problems:
+    student_code:
+        name: Enter the X value.
+        type: code_single_line
+        default: ''
+        header: |
+            Simply enter the numerical value for x. For example 6. This box has problem id: ``student_code``.
+
+            Notice everytime you reload this page, the equation changes in the task description and the solution is adapted.
+regenerate_input_random: 'on'
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

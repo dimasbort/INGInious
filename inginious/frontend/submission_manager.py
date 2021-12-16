@@ -8,9 +8,11 @@ import io
 import gettext
 import logging
 import os.path
+from os import environ
 import tarfile
 import tempfile
 import time
+import pathlib
 from typing import Dict, List
 import bson
 import pymongo
@@ -22,6 +24,7 @@ from pymongo.collection import ReturnDocument
 
 import inginious.common.custom_yaml
 from inginious.frontend.parsable_text import ParsableText
+from inginious.common.base import load_json_or_yaml
 
 
 class WebAppSubmissionManager:
@@ -51,6 +54,17 @@ class WebAppSubmissionManager:
         submission = self.get_submission(submissionid, False)
 
         submission = self.get_input_from_submission(submission)
+        
+        config = load_json_or_yaml(environ["INGINIOUS_WEBAPP_CONFIG"])
+        task_dir = config.get('tasks_directory', '.')
+        curr_p = str(task_dir)+'/'+str(submission['courseid'])+'/'+str(submission['taskid'])+"/submissions/s01-"+str(submission["username"][0])+".py"
+        f = open(curr_p, 'w')
+        for ke, val in submission["input"].items():
+            if not ke.startswith('@'):
+                f.write(val)
+                f.write('\n\r')
+        f.close()
+            
 
         data = {
             "status": ("done" if result[0] == "success" or result[0] == "failed" else "error"),
@@ -227,8 +241,8 @@ class WebAppSubmissionManager:
     def get_submission(self, submissionid, user_check=True):
         """ Get a submission from the database """
         sub = self._database.submissions.find_one({'_id': submissionid})
-        if user_check and not self.user_is_submission_owner(sub):
-            return None
+ #       if user_check and not self.user_is_submission_owner(sub):
+  #          return None
         return sub
 
     def add_job(self, task, inputdata, debug=False):

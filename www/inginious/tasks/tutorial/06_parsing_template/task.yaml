@@ -1,0 +1,131 @@
+accessible: true
+author: The INGInious authors
+categories: []
+contact_url: ''
+context: |+
+    .. container:: row
+
+        .. container:: col-md-10 text-justify
+
+            Sometimes you'll only ask students for a little piece of code which will be part of a partial implementation. You'll then need to put the student input into what is called a template file.
+
+
+
+    The ``parsetemplate`` API
+    -------------------------
+
+    .. class:: text-justify
+
+        Problem input can be inserted easily into existing code by inserting ``@[indent_chars]@problem_id@[ident_chars]@`` tags into those files. For instance, the following Python template will be used to load a student implemented into an existing function:
+
+        .. code-block:: python
+
+                def signature(arg1, arg2):
+                    print("Start of student code...")
+                @    @studentcode@@
+                    print("End of student code...")
+
+
+
+    .. class:: text-justify
+
+            The ``parsetemplate`` API is used with a template file as argument as well as the optional ``--output OUTPUTFILE`` argument if the output file should be different than the input file.
+
+            For instance, the following command will parse the ``template.py`` file into a new ``studentcode.py`` file:
+
+            .. code-block:: bash
+
+                parsetemplate --output studentcode.py template.py
+
+
+
+    Let's have a try
+    -----------------
+
+    .. class:: text-justify
+
+        This following simple template was put in this task directory as ``template.py``:
+
+        .. code-block:: python
+
+                #!/usr/bin/python3
+
+                #A function computing the absolute value
+                def abs(x):
+                @    @studentcode@@
+
+                test1 = abs(-1)
+                test2 = abs(10)
+                test3 = abs(-100)
+
+                if test1==1 and test2==10 and test3==100:
+                    print("success")
+                else:
+                    print("failed")
+
+
+    .. class:: text-justify
+
+     It simply tests the student function in a super basic way and prints success if the tests are passing.
+
+     This task uses a small run script that simply parses ``template.py`` with the ``studentcode`` then runs it in a *student container* and grades as success if it outputs "success".
+     Here is the run script:
+
+     .. code-block:: bash
+
+         #!/bin/bash
+
+        parsetemplate --output student/code.py template.py
+        output=$(run_student python3 student/code.py)
+
+        if [ "$output" = "success" ]; then
+            feedback-result success
+            feedback-msg -em "Your code is correct"
+        else
+            feedback-result failed
+            feedback-msg -em "Your code is not correct"
+        fi
+
+    .. class:: text-justify
+
+    ``template.py`` is parsed and the result, ``code.py``,is placed in the ``student`` directory to be accessible within the *student container*. Then it is simply run and the output is checked to grade the submission.
+
+    Let's take a tour
+    -----------------
+
+    .. class:: text-justify
+
+        Once you successfully implemented the abs(x) function and succeed in this task, you can go back to task ``5. Fetching student input`` and play with the sandbox there. Indeed you can use the file upload to upload a template that you will fill with the ``studentcode`` and finally run with the sandbox code.
+
+environment_id: default
+environment_parameters:
+    limits:
+        memory: '100'
+        time: '30'
+        hard_time: ''
+    run_cmd: ''
+environment_type: docker
+evaluate: best
+file: ''
+groups: false
+input_random: '0'
+name: 6. Parsing template
+network_grading: false
+order: 5
+problems:
+    studentcode:
+        language: ''
+        default: ''
+        name: Absolute value
+        type: code
+        header: |-
+            Enter your implementation for absolute value.
+            This code has the problem id ``studentcode`` and will be put in the template.
+            Student only has to enter the body of the function.
+
+            *Hint :* the signature is abs(x)
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

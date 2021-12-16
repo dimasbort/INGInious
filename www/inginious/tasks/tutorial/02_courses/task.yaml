@@ -1,0 +1,168 @@
+accessible: true
+author: The INGInious authors
+categories: []
+contact_url: ''
+context: |-
+    .. container:: row
+
+        .. container:: col-md-10 text-justify
+
+            The INGInious platform can host different courses. Each course is composed of a set of different tasks or assignments. Each of these are stored in a unique folder and identified using an alphanumerical identifier, referred as the *course id* or *task id*.
+
+            Courses are created by the super administrator(s) from the main page displaying the available courses, by specifying a new *course id*.
+
+        .. container:: col-md-2 text-center
+
+            .. raw:: html
+
+               <i style="font-size:120px;" class="fa fa-sitemap"></i>
+
+    The course administration
+    -------------------------
+
+    Settings
+    ````````
+
+    .. class:: text-justify
+
+        The `Course settings`_ are mostly used by the *micro-LMS* (webapp) frontend. Several parameters can be changed from there:
+
+        - **Name** : This is the complete displayed name of the course.
+        - **Administrators and tutors/teaching assistants** : This is the username list (separated by comma) of the course administrators or teaching assistants (TA). Administrators can access and change everything, and even delete the entire course. TA can acces the student submissions and change the student registrations.
+        - **Group attribution** : Students can be distributed in groups and audiences with the Users management page. The groups are useful if you want, for example, students to send a submission as a group for some specific tasks. With the Group attribution parameter you can allow students to register themselves into groups or groups to be handled only by staff. Another aspect that you will discover on the Users management page is the audience concept. This is invisible to the students view and allows the administrator to do see statistics on larger students clusters such as classrooms.
+        - **Course preview** : This is used to allow students who did not register for the course to see the course tasks in a read-only mode where they can not send submissions.
+        - **Accessibility** : A course can be open to students for a selected period only, if desired.
+        - **Registration policy** : Registrations can be open for a selected period only, with an optional registration password. This has to be differentiated from accessibility. Indeed, a course can be accessible while registrations are closed.
+        - **Access control** : This is used to restrict the course access to selected users.
+
+
+        All these settings are stored in a ``course.yaml`` file, in the course-associated folder and can be directly modified on the ``Course administration`` page.
+
+    .. _`Course settings`: /admin/tutorial/settings
+
+    Course organization and statistics
+    ``````````````````````````````````
+
+    .. class:: text-justify
+
+        The Users_management_ , Tasks_ and Submissions_ pages allow you to manage students/groups/audiences registrations, course tasks and students submissions respectively.
+
+        - `Users_management`_ page allows you to enroll/unenroll users from your course. It also displays some basic statistics on your students and the teaching staff that can be expanded by clicking on *View submissions*. It also allows to manage groups and audiences with the possibility to upload/download the structure as a yaml file as described in documentation.
+
+        - Tasks_ page allows you to edit the course tasks using the graphical editor where you can, for example, change their order. It also allow to open submissions for a specific task with the **view submissions** button or to modify a task with the **Edit task** button.
+
+        - Submissions_ page allows you to display all the submissions with filters options for specific groups, audiences, students or tasks. There, you can open a specific submission, download it or even replay it if you updated the grading script.
+
+
+    .. _Users_management: /admin/tutorial/students
+    .. _Students: /admin/tutorial/students
+    .. _Tasks: /admin/tutorial/tasks
+    .. _Submissions: /admin/tutorial/submissions
+
+
+    Marketplace
+    ```````````
+
+    The Marketplace_ allows to import available courses into your own INGInious deployment by copying their files. This could be very useful for new teachers willing to learn by inspecting already built courses.
+
+    Note, by default, these imported courses will not be displayed to students. You can change this in the course settings later.
+
+    .. _Marketplace: /marketplace
+
+    Let's take a tour
+    -----------------
+
+    Browse the INGInious course administration pages to discover the full set of features. Once you've made that, answer to the small MCQ below to check your understanding and learn more.
+environment_id: mcq
+environment_parameters: {}
+environment_type: mcq
+evaluate: best
+file: ''
+groups: false
+input_random: '0'
+name: 2. Courses
+network_grading: false
+order: 1
+problems:
+    q1:
+        type: multiple_choice
+        choices:
+        -   text: You create a sufficient amount of empty groups with appropriate
+                maximum size in the Users management page.
+            feedback: For the students to register by themselves in groups, you also
+                need to give them this ability via the Course settings.
+        -   valid: true
+            text: You create a sufficient amount of empty groups with appropriate
+                maximum size and check that students are allowed to register by themselves
+                in the course settings.
+        -   feedback: Students won't be able to create groups by their own. You first
+                need to create empty groups before the students can populate them.
+            text: You check that students are allowed to register by themselves.
+        header: You've been preparing your course material during last summer and  are
+            now ready to open your course to users. You want an assignment to be done
+            by groups/teams of max. 3 students and checked the option in the task
+            parameter to allow group submission. You want students to form their groups.
+            How can you achieve this ?
+        name: Groups composition
+        limit: 0
+    q2:
+        choices:
+        -   text: 'You create two audiences in the Users management page and fill
+                them with students or upload a structure with a yaml file as described
+                in documentation. Then you create groups and add audience restriction
+                to the groups. Finally, you allow students to register in groups with
+                the course settings page. '
+            valid: true
+        -   text: INGInious does not allow this.
+            feedback: Of course it does !
+        -   feedback: Students can not create groups. You have to create groups to
+                allow students to populate them. Furthermore, creating audiences is
+                a good start but you have to restrict groups registration based on
+                these two audiences.
+            text: 'You create two audiences in the Users management page and fill
+                them with students or upload a structure with a yaml file as described
+                in documentation. Then you allow students to register in groups with
+                the course settings page. '
+        name: Students audiences
+        type: multiple_choice
+        header: |-
+            You have a large number of students, some are engineering students and some are computer science students.
+            You want students to join teams to work together but you don't want students from different curricula to mix together.
+            How can you achieve that?
+        limit: 0
+    q3:
+        choices:
+        -   text: You ask the super-administrator to duplicate the course.
+        -   valid: true
+            text: In the administration *Danger zone*, you archive the course data,
+                so that past year are wiped and backup if needed later.
+        header: You're about to restart your course this semester and want all the
+            student data to be cleaned while keeping the course and tasks unmodified
+            for the new students. How do you do that ?
+        type: multiple_choice
+        limit: 0
+        name: Course archive
+    q4:
+        limit: 0
+        choices:
+        -   valid: true
+            text: All the submissions of a given student
+        -   valid: true
+            text: The submissions for a given task of a given student
+        -   text: All the submissions for a given audience
+            valid: true
+        -   text: The submissions for a given task of a given group
+            valid: true
+        success_message: All these views are actually available, but many more can
+            be generated, just browse the pages.
+        error_message: The statistics pages offer more possibilities.
+        type: multiple_choice
+        multiple: true
+        header: Among the following suggestions, what statistics tables are actually
+            available through the course administration pages ?
+        name: Statistics view
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0

@@ -1,0 +1,19 @@
+admins:
+- superuser
+name: '[DEMO] Demonstration course'
+tutors: []
+groups_student_choice: false
+accessible: true
+registration: true
+registration_password: null
+registration_ac: null
+task_dispenser: toc
+dispenser_data:
+-   config:
+        closed: true
+    id: tasks-list
+    rank: 0
+    tasks_list:
+        helloworld: 0
+        i: 1
+    title: Introduction

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+parsetemplate --output student/code.py template.py
+getinput question1 > /archive/code.py
+output=$(run_student python3 student/code.py)
+
+
+if [ "$output" = "Hello World!" ]; then
+    feedback-result success
+	feedback-msg -em "Your code is correct"
+else
+    feedback-result failed
+    feedback-msg -em "Your program displayed : $output"
+fi

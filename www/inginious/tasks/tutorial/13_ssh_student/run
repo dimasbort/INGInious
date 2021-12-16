@@ -1,0 +1,9 @@
+#!/bin/bash
+ssh_student --setup-script "touch /task/student/delete_me.txt"
+
+if [ -f /task/student/delete_me.txt ]; then
+	feedback-result failed
+	feedback-msg -em "You did not delete the file!"
+else
+	feedback-result success
+fi

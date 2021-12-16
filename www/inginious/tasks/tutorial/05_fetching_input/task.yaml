@@ -1,0 +1,89 @@
+accessible: true
+author: The INGInious authors
+categories: []
+context: |-
+    .. container:: row
+
+        .. container:: col-md-10 text-justify
+
+            In this section you'll see how to fetch the student input in order to perform the evaluation and provide feedback.
+
+            The task problems are identified using their *problem ids*, which are specified at the new problem addition. Using these *problem ids*, you'll either store the content of the problem field somewhere, or include it in an existing template.
+
+        .. container:: col-md-2 text-center
+
+            .. raw:: html
+
+               <i style="font-size:120px;" class="fa fa-edit"></i>
+
+    The ``getinput`` API
+    ---------------------
+
+    .. class:: text-justify
+
+        The following exercise defines an additional code box with *problem id* ``studentcode``. The ``getinput`` API is used with *problem id* as argument and returns the value of the associated input field.
+
+        The following command will fetch the ``studentcode`` problem and store the code into a ``studentcode.py`` file in the ``student`` directory.
+
+        .. code-block:: bash
+
+            getinput studentcode > student/studentcode.py
+
+        The API will, by default, return the binary content of file in case of a file upload problem. Additional syntax using ``problemid:filename`` and ``problemid:value`` will give you explicit access to the filename as it was uploaded and binary file content. For instance, the following command will store the ``studentupload`` problem filename inside variable ``FILENAME``:
+
+        .. code-block:: bash
+
+            FILENAME=$(getinput studentupload:filename)
+
+
+
+    Let's take a tour
+    -----------------
+
+    .. class:: text-justify
+
+        Use the file upload and code box inputs defined below along with the sandbox to find out in details the ``getinput`` and ``parsetemplate`` features. This task is using a run script that simply grades as success if the sandbox code runs correctly. Your sandbox output will be shown in feedback.
+environment: default
+evaluate: best
+file: ''
+groups: false
+input_random: '0'
+limits:
+    output: '2'
+    memory: '100'
+    time: '3'
+name: 5. Fetching student input
+network_grading: false
+order: 4
+problems:
+    studentupload:
+        type: file
+        name: File upload
+        header: This box is used to upload a file and has *problem id* ``studentupload``.
+            Please select any file on your disk that meet the requirements. Please
+            note that it will be stored within the submission.
+    studentcode:
+        name: Code box
+        language: ''
+        type: code
+        header: This box is used to type code and has problem id ``studentcode``.
+            No syntax highlighting is configured.
+        default: ''
+    thecode:
+        language: shell
+        default: ''
+        optional: 'on'
+        name: Sandbox
+        header: |-
+            Use this code box as a sandbox for testing the ``getinput`` API. **Here you'll write an executable script**, so do not forget beginning your code, for instance, by:
+
+            .. code-block:: bash
+
+                #!/bin/bash
+        type: code
+run_cmd: ''
+stored_submissions: 0
+submission_limit:
+    amount: -1
+    period: -1
+weight: 1.0
