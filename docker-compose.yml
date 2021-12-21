@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    db:
+	image: mongo:latest
+	ports:
+	    - 27017:27017
+	volumes:
+            - /data/db:/data/mongodb/db
+    web:
+	image: ksusha3011neprostopeshka/ingi:latest
+	command: inginious-webapp —config /usr/src/app/www/inginious/configuration.yaml
+	environment:
+	    WAIT_HOSTS: mongo:27017
+	ports:
+	    - 8000:8000
+	depends_on:
+	    - db
