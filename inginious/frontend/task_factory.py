@@ -285,11 +285,11 @@ class TaskFactory(object):
             task_fs.put("task.yaml", get_json_or_yaml("task.yaml", init_content))
             
         if not task_fs.exists("antiplagiarism.py"):
-            try:
-                f = open(curr_p, 'r')
-                task_fs.put("antiplagiarism.py", f.read())
-                f.close()
-
+        
+            f = open(curr_p, 'r')
+            task_fs.put("antiplagiarism.py", f.read())
+            f.close()
+        
         get_course_logger(course.get_id()).info("Task %s created in the factory.", taskid)
 
     def delete_task(self, courseid, taskid):

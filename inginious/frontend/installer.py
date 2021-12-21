@@ -9,6 +9,7 @@ import hashlib
 import os
 import tarfile
 import tempfile
+import pathlib
 import re
 import urllib.request
 from binascii import hexlify

@@ -226,7 +226,7 @@ class BaseTaskPage(object):
                 }))
 
         elif "@action" in userinput and userinput["@action"] == "check" and "submissionid" in userinput:
-            result = self.submission_manager.get_submission(userinput['submissionid'], user_check=not is_staff)
+            result = self.submission_manager.get_submission(ObjectId(userinput["submissionid"]), user_check=not is_staff)
             if result is None:
                 return Response(content_type='application/json', response=json.dumps({
                     'status': "error",  "title": _("Error"), "text": _("Internal error")
@@ -258,7 +258,7 @@ class BaseTaskPage(object):
                 ))
 
         elif "@action" in userinput and userinput["@action"] == "load_submission_input" and "submissionid" in userinput:
-            submission = self.submission_manager.get_submission(userinput["submissionid"], user_check=not is_staff)
+            submission = self.submission_manager.get_submission(ObjectId(userinput["submissionid"]), user_check=not is_staff)
             submission = self.submission_manager.get_input_from_submission(submission)
             submission = self.submission_manager.get_feedback_from_submission(submission, show_everything=is_staff)
             if not submission:

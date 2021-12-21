@@ -201,17 +201,21 @@ class CourseSubmissionsPage(INGIniousSubmissionsAdminPage):
                                                                     keep_only_crashes=keep_only_crashes)
 
         submissions = self.database.submissions.find(filter)
-        submissions_count = len(list(submissions))
+        
 
         if sort_by[0] not in ["submitted_on", "username", "grade", "taskid"]:
             sort_by[0] = "submitted_on"
         submissions = submissions.sort(sort_by[0], pymongo.ASCENDING if sort_by[1] else pymongo.DESCENDING)
 
-        if skip is not None and skip < submissions_count:
-            submissions.skip(skip)
-
         if limit is not None:
-            submissions.limit(limit)
+            submissions.limit(limit)   
+            
+        submissions_count = 100000000  
+        
+        if skip is not None and skip < submissions_count: 
+            submissions.skip(skip)
+           
+
 
         out = list(submissions)
 
